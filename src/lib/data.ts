@@ -5,7 +5,7 @@ export const profile = {
     "I turn bold ideas into interactive, immersive experiences on the modern web.",
   about: [
     "I'm a creative developer obsessed with the intersection of code and motion — building websites that don't just display content, but feel alive.",
-    "For the past 8 years I've been crafting award-worthy digital experiences: from cinematic scroll stories and 3D product configurators to playful micro-interactions that make interfaces memorable.",
+    "For the past 5 years I've been crafting award-worthy digital experiences: from cinematic scroll stories and 3D product configurators to playful micro-interactions that make interfaces memorable.",
     "When I'm not pushing pixels and polycounts, I experiment with generative art, shaders, and open-source tooling.",
   ],
   location: "Yogyakarta, ID",
