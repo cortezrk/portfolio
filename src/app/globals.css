@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-neon: var(--neon);
+  --color-neon-dim: var(--neon-dim);
+  --color-violet: var(--violet);
+  --color-magenta: var(--magenta);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+
+  --shadow-glow: var(--glow);
+  --shadow-glow-violet: var(--glow-violet);
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #05060a;
+  --surface: #0b0d14;
+  --neon: #22d3ee;
+  --neon-dim: #0ea5b7;
+  --violet: #a78bfa;
+  --magenta: #e879f9;
+  --foreground: #e7ecf3;
+  --muted: #8b93a7;
+  --line: rgba(148, 163, 184, 0.16);
+
+  --on-accent: #0b0d14;
+
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-strong-bg: rgba(10, 12, 19, 0.42);
+  --glass-solid-bg: rgba(10, 12, 19, 0.95);
+  --glass-sheen: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.03) 45%,
+    transparent 65%
+  );
+  --nav-rim: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0.03) 75%,
+    transparent
+  );
+
+  --nav-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 40px rgba(0, 0, 0, 0.45);
+
+  --glow: 0 0 24px rgba(34, 211, 238, 0.35);
+  --glow-violet: 0 0 28px rgba(167, 139, 250, 0.4);
+
+  --neon-glow-text: 0 0 18px rgba(34, 211, 238, 0.55);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --neon: #0e7490;
+  --neon-dim: #155e75;
+  --violet: #7c3aed;
+  --magenta: #c026d3;
+  --foreground: #17181c;
+  --muted: #5b6470;
+  --line: rgba(9, 9, 11, 0.12);
+
+  --on-accent: #ffffff;
+
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(9, 9, 11, 0.12);
+  --glass-strong-bg: rgba(255, 255, 255, 0.5);
+  --glass-solid-bg: rgba(255, 255, 255, 0.96);
+  --glass-sheen: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.55)
+  );
+  --nav-rim: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.35) 40%,
+    rgba(9, 9, 11, 0.16) 90%
+  );
+
+  --nav-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 32px rgba(9, 9, 11, 0.16);
+
+  --glow: 0 0 24px rgba(14, 116, 144, 0.22);
+  --glow-violet: 0 0 28px rgba(124, 58, 237, 0.26);
+
+  --neon-glow-text: 0 0 16px rgba(14, 116, 144, 0.3);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-foreground);
+  font-family: var(--font-space-grotesk);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hide native cursor only on fine pointers; fallback for touch */
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-neon), var(--color-violet));
+  border-radius: 999px;
+}
+
+/* ---------- Utilities ---------- */
+@utility glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+/* Floating pill navbar — iOS Liquid Glass: heavy frost + specular rim */
+@utility glass-nav {
+  position: relative;
+  background: var(--glass-strong-bg);
+  background-image: var(--glass-sheen);
+  backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--nav-shadow);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: var(--glass-solid-bg);
+    background-image: none;
+    backdrop-filter: none;
+  }
+}
+.glass-nav::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--nav-rim);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass-nav::after {
+    display: none;
+  }
+}
+
+/* Card variant with cursor-tracking spotlight highlight */
+@utility glass-soft {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+.glass-soft::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(34, 211, 238, 0.12),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.glass-soft:hover::before {
+  opacity: 1;
+}
+
+@utility text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--color-neon),
+    var(--color-violet),
+    var(--color-magenta)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility neon-text {
+  text-shadow: var(--neon-glow-text);
+}
+
+@utility glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 211, 238, 0.6),
+    rgba(167, 139, 250, 0.4),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+@utility noise {
+  position: relative;
+}
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Magnetic hover target */
+.magnetic {
+  will-change: transform;
+}
+
+/* Shared reveal base for GSAP scroll cues */
+[data-reveal] {
+  opacity: 0;
+}
+
+/* Focus visible for a11y */
+:focus-visible {
+  outline: 2px solid var(--color-neon);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
