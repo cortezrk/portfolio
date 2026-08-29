@@ -83,7 +83,7 @@ export default function Contact() {
                   id="name"
                   required
                   className="glass w-full rounded-xl px-4 py-3 text-foreground outline-none transition-colors focus:border-neon/60 placeholder:text-muted/50"
-                  placeholder="John Doe"
+                  placeholder="You"
                 />
               </div>
               <div>
